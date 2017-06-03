@@ -1,18 +1,9 @@
-# Token SOFA App
-
-This repo helps you build a [Token app](https://www.tokenbrowser.com) in Javascript.
-
-The sample bot can:
-
-* send messages
-* send and request money
-* create simple UI for buttons and menus
-* store sessions and state for each user
+# ICO Helper for Token Hackathon
 
 TODO
-
-* sending image messages
-* creating web view UIs
+* ICO Index Bot
+* 一键参投
+* 资金流分析
 
 ## Launch your own Token app in 5 minutes
 
@@ -27,6 +18,9 @@ Then check out [`src/bot.js`](src/bot.js) to start changing the bot logic.
 ## Running locally with Docker
 
 You can run the project locally with
+```
+yarn
+```
 
 ```
 docker-compose up

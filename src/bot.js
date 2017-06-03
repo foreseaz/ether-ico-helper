@@ -35,8 +35,9 @@ function onCommand(session, command) {
     case 'ping':
       pong(session)
       break
-    case 'count':
-      count(session)
+    case 'webview':
+      webview(session)
+      // count(session)
       break
     case 'donate':
       donate(session)
@@ -69,7 +70,7 @@ function onPayment(session, message) {
 // STATES
 
 function welcome(session) {
-  sendMessage(session, `Hello Token!`)
+  sendMessage(session, `一顆賽艇!`)
 }
 
 function pong(session) {
@@ -90,12 +91,38 @@ function donate(session) {
   })
 }
 
+function webview(session) {
+  console.log('[session] ', session);
+  session.reply(SOFA.Message({
+    body: "Wanna more ICO info?",
+    controls: [
+      {
+        type: "group",
+        label: "ICO Info",
+        controls: [
+          {type: "button", label: "ICO Timetable", action: "Webview::https://google.com"},
+          {type: "button", label: "BAT", action: "Webview::https://etherscan.io/token/BAT"},
+          {type: "button", label: "Exit Info", value: "exit"},
+        ]
+      },
+      {
+        type: "group",
+        label: "Past ICO Analysis",
+        "controls": [
+          {type: "button", label: "Find ICO", action: "Webview::https://etherscan.io/search"},
+          {type: "button", label: "Find", value: "find"}
+        ]
+      }
+    ]
+  }))
+}
+
 // HELPERS
 
 function sendMessage(session, message) {
   let controls = [
     {type: 'button', label: 'Ping', value: 'ping'},
-    {type: 'button', label: 'Count', value: 'count'},
+    {type: 'button', label: 'Webview Test', value: 'webview'},
     {type: 'button', label: 'Donate', value: 'donate'}
   ]
   session.reply(SOFA.Message({
