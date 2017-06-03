@@ -7,26 +7,33 @@ TODO
 
 ## Running locally
 
+#### Prepare:
 - Install and run docker
 - `yarn`
+- `cd src/client && yarn`
 - Amend `docker-compose-dev.yml` with your own TOKEN_APP_SEED, generate it [here](https://www.tokenbrowser.com/token-seed-generator/) and update your own app name and user name, make sure no others using it.
-- `yarn dev`
 
-If any new depencies are added you can rebuild the project with
+#### Start Dev:
+- `yarn start-bot: up docker for local bot dev`
+- `yarn start-web: Express backend at http://localhost:3001 and React frontend at http://localhost:3000`
 
-```
-yarn build
-```
-
-To reset the postgres database in your dev environment you can use
-
+#### After Dev:
+To reset the postgres database for bot:
 ```
 yarn reset
+```
+Build web-client before push:
+```
+cd src/client && yarn build
+```
+Test web after build:
+```
+yarn serve-prod
 ```
 
 ## Architecture
 
-Deploying a Token app requires a few processes to run:
+#### Bot:
 * **token-headless-client**<br>
   This is a client we provide (similar to the iOS or Android client) that provides a wrapper around the Token backend services. It also handles end-to-end encrypting all messages using the Signal protocol. It is written in Java and runs in the background, proxying all the requests to amd from your bot.
 * **redis**<br>
@@ -36,4 +43,10 @@ Deploying a Token app requires a few processes to run:
 * **postgres**<br>
   Postgres is used to store session data so you can persist state for each user who talks to your bot (similar to cookies in a web browser).
 
-![diagram](docs/images/app-architecture.png)
+![diagram](docs/images/tokenbot.png)
+
+##### Web:
+* **Node & Express as API server**<br>
+* **React frontend**<br>
+
+![diagram](docs/images/web.png)
