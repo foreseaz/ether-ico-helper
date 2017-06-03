@@ -9,7 +9,7 @@ TODO
 
 - Install and run docker
 - `yarn`
-- Amend `docker-compose-dev.yml` with your own TOKEN_APP_SEED, generate it at https://www.tokenbrowser.com/token-seed-generator/ and update your own app name and user name, make sure no others using it.
+- Amend `docker-compose-dev.yml` with your own TOKEN_APP_SEED, generate it [here](https://www.tokenbrowser.com/token-seed-generator/) and update your own app name and user name, make sure no others using it.
 - `yarn dev`
 
 If any new depencies are added you can rebuild the project with
@@ -21,7 +21,7 @@ yarn build
 To reset the postgres database in your dev environment you can use
 
 ```
-yarn clean
+yarn reset
 ```
 
 ## Architecture
