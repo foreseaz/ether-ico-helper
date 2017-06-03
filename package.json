@@ -32,13 +32,15 @@
     "concurrently": "3.1.0"
   },
   "scripts": {
-    "dev": "docker-compose -f docker-compose.yml -f docker-compose-dev.yml up",
     "build-docker": "docker-compose build",
     "reset": "docker-compose down -v",
     "console": "nodemon -L src/lib/Console.js config.yml",
-    "server": "babel-node src/server.js",
+    "start-bot": "docker-compose -f docker-compose.yml -f docker-compose-dev.yml up",
+
     "client": "babel-node src/start-client.js",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "server": "babel-node src/server.js",
+    "serve-prod": "NODE_ENV=production babel-node src/server.js",
+    "start-web": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
     "node": "7.4.0"

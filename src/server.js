@@ -12,7 +12,7 @@ app.set('port', (process.env.PORT || 3001));
 // Express only serves static assets in production for React CSR
 if (process.env.NODE_ENV === 'production') {
   console.log('serve static');
-  app.use(express.static('client/build'));
+  app.use(express.static('src/client/build'));
 }
 
 const COLUMNS = [
