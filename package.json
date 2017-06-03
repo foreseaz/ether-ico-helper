@@ -37,6 +37,7 @@
     "reset": "docker-compose down -v",
     "console": "nodemon -L src/lib/Console.js config.yml",
     "server": "babel-node src/server.js",
+    "serve-prod": "NODE_ENV=production babel-node src/server.js",
     "client": "babel-node src/start-client.js",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
