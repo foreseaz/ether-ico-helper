@@ -12,7 +12,7 @@ services:
       - TOKEN_APP_USERNAME=icoinsider
       # production app name
       - TOKEN_APP_NAME=icoinsider
-      - TOKEN_APP_AVATAR=https://api.adorable.io/avatars/285/icohelper.png
+      - TOKEN_APP_AVATAR=attachments/eth_ico.png
       - REDIS_URL=redis://h:rlcMWNrxXgqS0xM8aWCYuE0R@redis:6379
       - DATABASE_URL=postgres://token:va5uOdJBqu2dZ1@postgres:5432/token
       - LOG_LEVEL=INFO
