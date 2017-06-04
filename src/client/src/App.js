@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import particlesConfig from './config/particlesjs-config.js';
+import 'particles.js';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    if (window.particlesJS) {
+      window.particlesJS('particles-js', particlesConfig);
+    }
+  }
+
   render() {
     return (
       <div className="App" id="home">
-        <div className="ui inverted masthead centered segment">
+        <div id="particles-js"></div>
+        <div className="landing-wrapper ui inverted masthead centered segment">
           <div className="ui page grid" style={{minHeight: '100vh'}}>
             <div className="column">
-
               <div className="ui secondary pointing menu">
                 <a className="logo item">
                   ICO Insider
