@@ -14,8 +14,8 @@ TODO
 - Amend `docker-compose-dev.yml` with your own TOKEN_APP_SEED, generate it [here](https://www.tokenbrowser.com/token-seed-generator/) and update your own app name and user name, make sure no others using it.
 
 #### Start Dev:
-- `yarn start-bot: up docker for local bot dev`
-- `yarn start-web: Express backend at http://localhost:3001 and React frontend at http://localhost:3000`
+- `yarn bot: up docker for local bot dev`
+- `yarn web: Express backend at http://localhost:3001 and React frontend at http://localhost:3000`
 
 #### After Dev:
 To reset the postgres database for bot:
@@ -28,7 +28,7 @@ cd src/client && yarn build
 ```
 Test web after build:
 ```
-yarn serve-prod
+yarn prod
 ```
 
 ## Architecture
