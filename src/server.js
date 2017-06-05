@@ -20,7 +20,7 @@ const COLUMNS = [
 
 // Serves static assets for non-api routes
 
-server.use('/static', express.static('src/client/build/static'));
+server.use('/', express.static('src/client/build/'));
 // server.use('/client', express.static('src/client/build'));
 
 server.use((req, res, next) => {

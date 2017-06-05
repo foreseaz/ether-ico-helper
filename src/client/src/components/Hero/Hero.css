@@ -1,0 +1,43 @@
+._hero.information {
+  margin: 100px 0;
+  text-align: center;
+}
+._hero.information p {
+   display: block;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+    font-size: 20pt;
+}
+._hero.information .button{
+    display: block;
+    width: 100px;
+    /*border-radius: 500px;*/
+}
+._hero p.ui.centered.lead{
+    font-weight: 300;
+    font-size: 16pt;
+    padding: 0px 30px;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 0.7em;
+}
+._hero .search-box {
+  margin-top: 70px;
+}
+
+._hero .search-input {
+  height: 50px;
+  width: 400px;
+  font-size: 1.2em;
+  margin-right: 20px !important;
+}
+@media screen and (max-width: 568px) {
+  ._hero .search-input {
+    width: 250px;
+  }
+}
+
+._hero .search-btn {
+  margin-top: 5px;
+}
