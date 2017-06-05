@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import TokenGrid from './components/TokenGrid';
+import Footer from './components/Footer';
 
 import particlesConfig from './config/particlesjs-config.js';
 import 'particles.js';
@@ -27,6 +28,7 @@ class App extends Component {
           </div>
         </div>
         <TokenGrid />
+        <Footer />
       </div>
     );
   }
