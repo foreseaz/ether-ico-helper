@@ -50,7 +50,7 @@ def get_ico_list():
         description = cols[3].getText().strip()
         ico_tokenmarket_page = cols[1].a.get('href')
         (official_website, start_time, end_time) = get_ico_info(ico_tokenmarket_page)
-        smart_contract_address = get_ico_address(name, ico_tokenmarket_page)
+        smart_contract_address = get_ico_address(symbol, ico_tokenmarket_page)
         ico = {
             'name': name,
             'symbol': symbol,
