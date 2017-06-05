@@ -1,0 +1,6 @@
+INFO:root:Start crawler...
+INFO:root:{'address': [], 'end_time': '', 'description': 'The protocol for decentralized exchange', 'official_website': 'https://www.0xproject.com/#home', 'name': '0x Project', 'symbol': 'ZRC', 'status': 'ICO coming', 'start_time': ''}
+INFO:root:Start crawler...
+INFO:root:{'start_time': '', 'status': 'ICO coming', 'end_time': '', 'symbol': 'ZRC', 'official_website': 'https://www.0xproject.com/#home', 'name': '0x Project', 'address': [], 'description': 'The protocol for decentralized exchange'}
+INFO:root:{'start_time': '', 'status': 'ICO coming', 'end_time': '', 'symbol': '21MCoin', 'official_website': 'https://www.21million.co.uk/', 'name': '21 Million', 'address': [], 'description': 'Crypto-funded blockchain indy tv series'}
+ERROR:root:Fail to connect https://tokenmarket.net/blockchain/ethereum/assets/shift/ with status code 502
