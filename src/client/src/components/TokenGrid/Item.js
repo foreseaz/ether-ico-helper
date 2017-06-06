@@ -3,8 +3,8 @@ import { Image, Card, Icon, Segment, Label } from 'semantic-ui-react';
 import './Item.css'
 
 const Item = ({token}) => (
-  <Card href='#token-address' className="_card">
-    <Image src='/imgs/eth_ico.png' />
+  <Card href={token.official_website} className="_card">
+    <Image src={'/'+token.logo} />
     <Card.Content>
       <Card.Header>
         {token.name}
