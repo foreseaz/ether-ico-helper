@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # ICO Addr Crawler
 from bs4 import BeautifulSoup
-import argparse
 import json
 import logging
 import requests
+import os
 import sys
 
 
-def get_ico_list():
+def get_ico_list(ico_logo_dir):
     # <tr>
     #     <td>
     #        <span class="asset-status asset-status-ico-coming">
@@ -33,6 +33,7 @@ def get_ico_list():
     #     </td>
     # </tr>
     ico_list = []
+    ico_tokenmarket_page_list = []
     ico_url = 'https://tokenmarket.net/blockchain/ethereum/assets'
     ico_list_page = requests.get(ico_url)
     if ico_list_page.status_code != 200:
@@ -50,7 +51,14 @@ def get_ico_list():
         description = cols[3].getText().strip()
         ico_tokenmarket_page = cols[1].a.get('href')
         (official_website, start_time, end_time) = get_ico_info(ico_tokenmarket_page)
-        smart_contract_address = get_ico_address(symbol, ico_tokenmarket_page)
+        smart_contract_address = get_ico_address(name, symbol, ico_tokenmarket_page)
+        # download logo
+        logo_path = os.path.join(ico_logo_dir, symbol + '.png')
+        logo_url = ico_tokenmarket_page + 'logo_big.png'
+        logo_request = requests.get(logo_url, stream=True)
+        with open(logo_path, 'wb') as image:
+            for chunk in logo_request.iter_content(chunk_size=2048):
+                image.write(chunk)
         ico = {
             'name': name,
             'symbol': symbol,
@@ -59,7 +67,8 @@ def get_ico_list():
             'official_website': official_website,
             'start_time': start_time,
             'end_time': end_time,
-            'address': smart_contract_address
+            'address': smart_contract_address,
+            'logo': logo_path
         }
         logging.info(ico)
         ico_list.append(ico)
@@ -73,19 +82,26 @@ def get_ico_info(ico_tokenmarket_page):
         sys.exit()
 
     ico_info_soup = BeautifulSoup(ico_info.content, 'lxml')
-    official_website = ico_info_soup.find('a', {'class': 'btn btn-primary btn-block btn-lg'}).get('href')
+    official_website_a = ico_info_soup.find('a', {'class': 'btn btn-primary btn-block btn-lg'})
+    official_website = ''
+    if official_website_a is not None:
+        official_website = official_website_a.get('href')
     start_time = ''
     end_time = ''
     for row in ico_info_soup.find('table', {'class': 'table table-asset-data'}).find_all('tr'):
-        cols = row.find_all('td')
-        if cols[0].getText().strip() == 'Crowdsale opening date':
-            start_time = cols[1].getText().strip()
-        elif cols[0].getText().strip() == 'Crowdsale closing date':
-            end_time = cols[1].getText().strip()
+        th = row.find('th')
+        td = row.find_all('p')
+        if len(td) > 0:
+            if th.getText().strip() == 'Crowdsale opening date':
+                start_time = td[0].getText().strip()
+            elif th.getText().strip() == 'Crowdsale closing date':
+                end_time = td[0].getText().strip()
+            else:
+                pass
     return official_website, start_time, end_time
 
 
-def get_ico_address(name, ico_tokenmarket_page):
+def get_ico_address(name, symbol, ico_tokenmarket_page):
     address = []
     # step 1: try to get address from tokenmarket
     # e.g. ico_tokenmarket_page = 'https://tokenmarket.net/blockchain/ethereum/assets/monaco/'
@@ -114,40 +130,59 @@ def get_ico_address(name, ico_tokenmarket_page):
             address.append(ps[3].a.get('href'))
 
     # step 2: try to find address from etherscan
-    # process name like mysterium network
-    for ico_name in name.split(' '):
-        # etherscan cannot search this project correctly
-        if ico_name == '0x':
-            continue
-        etherscan_search_url = 'https://etherscan.io/searchHandler?term=' + ico_name
-        ico_etherscan = requests.get(etherscan_search_url)
-        if ico_etherscan.status_code != 200:
-            logging.error('Fail to connect %s with status code %d', etherscan_search_url, ico_etherscan.status_code)
-            sys.exit()
-        # if success, the server will response like
-        # `["Monaco (MCO)\t0xb04cfa8a26d602fb50232cee0daf29060264e04b\tERC20: 0xb04cfa8a26d602fb50232cee0da...\t2"]`
-        # and we can get url "https://etherscan.io/token/0xb04cfa8a26d602fb50232cee0daf29060264e04b"
-        # otherwise, it will response `[]`
-        ico_etherscan_content = ico_etherscan.content.decode("utf-8")
-        if ico_etherscan_content != '[]':
-            token_address_or_name = ico_etherscan_content.split('\\t')[1]
-            if len(token_address_or_name) < 42:
-                # the address have a name
-                token_url = 'https://etherscan.io/token/' + ico_etherscan_content.split('\\t')[1]
-                token_etherscan_page = requests.get(token_url)
-                if token_etherscan_page.status_code != 200:
-                    sys.exit()
-                token_etherscan_soup = BeautifulSoup(token_etherscan_page.content, 'lxml')
-                tr = token_etherscan_soup.find('tr', {'id': 'ContentPlaceHolder1_trContract'})
-                address.append(tr.a.getText().strip())
-            else:
-                address.append(token_address_or_name)
+    # etherscan cannot search '0x' project correctly
+    if name == '0x':
+        return address
+    # search by name
+    etherscan_search_url = 'https://etherscan.io/searchHandler?term=' + '+'.join(name.split(' '))
+    return_address = etherscan_search(etherscan_search_url)
+    if return_address == '':
+        # if there is no address record by searching by name, search by symbol
+        etherscan_search_url = 'https://etherscan.io/searchHandler?term=' + symbol
+        return_address = etherscan_search(etherscan_search_url)
+    if return_address != '':
+        address.append(return_address)
     return address
 
 
-logging.basicConfig(filename='../crawler.log', level=logging.ERROR)
-logging.info('Start crawler...')
-with open('../ico_tmp.json', 'w') as outfile:
-    ico_list = get_ico_list()
-    json.dump(ico_list, outfile)
+def etherscan_search(url):
+    ico_etherscan = requests.get(url)
+    if ico_etherscan.status_code != 200:
+        logging.error('Fail to connect %s with status code %d', url, ico_etherscan.status_code)
+        sys.exit()
+    # if success, the server will response like
+    # `["Monaco (MCO)\t0xb04cfa8a26d602fb50232cee0daf29060264e04b\tERC20: 0xb04cfa8a26d602fb50232cee0da...\t2"]`
+    # and we can get url "https://etherscan.io/token/0xb04cfa8a26d602fb50232cee0daf29060264e04b"
+    # otherwise, it will response `[]`
+    ico_etherscan_content = ico_etherscan.content.decode("utf-8")
+    if ico_etherscan_content != '[]':
+        token_address_or_name = ico_etherscan_content.split('\\t')[1]
+        if len(token_address_or_name) < 42:
+            # the address have a name
+            token_url = 'https://etherscan.io/token/' + ico_etherscan_content.split('\\t')[1]
+            token_etherscan_page = requests.get(token_url)
+            if token_etherscan_page.status_code != 200:
+                sys.exit()
+            token_etherscan_soup = BeautifulSoup(token_etherscan_page.content, 'lxml')
+            tr = token_etherscan_soup.find('tr', {'id': 'ContentPlaceHolder1_trContract'})
+            return tr.a.getText().strip()
+        else:
+            return token_address_or_name
+    else:
+        return ''
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 4:
+        logging.error('Wrong arguments number')
+        print('Usage: crawler.py output.json crawler.log')
+        sys.exit(1)
+    ico_file = sys.argv[1]
+    ico_log_file = sys.argv[2]
+    ico_logo_dir = sys.argv[3]
+    logging.basicConfig(filename=ico_log_file, level=logging.DEBUG)
+    logging.info('Start crawler...')
+    ico_list = get_ico_list(ico_logo_dir)
+    with open(ico_file, 'w') as outfile:
+        json.dump(ico_list, outfile)
 
