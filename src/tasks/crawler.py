@@ -53,7 +53,7 @@ def get_ico_list(ico_logo_dir):
         (official_website, start_time, end_time) = get_ico_info(ico_tokenmarket_page)
         smart_contract_address = get_ico_address(name, symbol, ico_tokenmarket_page)
         # download logo
-        logo_path = os.path.join(ico_logo_dir, symbol + '.png')
+        logo_path = os.path.join(ico_logo_dir, symbol.replace(' ', '_') + '.png')
         logo_url = ico_tokenmarket_page + 'logo_big.png'
         logo_request = requests.get(logo_url, stream=True)
         with open(logo_path, 'wb') as image:
