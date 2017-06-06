@@ -1,2 +1,6 @@
 ._card .description {
 }
+
+._card > img {
+  width: 100%;
+}
