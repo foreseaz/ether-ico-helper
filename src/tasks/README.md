@@ -2,7 +2,7 @@ Please run `./scripts/setup.sh` to install required packages first.
 
 To start ico crawler, use `./scripts/run.sh`.
 
-The log will save in `crawler.log` and the result (include `<name, symbol, official_website, status, start_time, end_time, address>`) is stored in `ico.json` as follows:
+The log will save in `crawler.log` and the result (include `<name, symbol, official_website, status, start_time, end_time, address, logo path>`) is stored in `ico.json` as follows:
 
 ```
 ~ cat ico.json
