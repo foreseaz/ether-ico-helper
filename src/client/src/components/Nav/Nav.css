@@ -1,0 +1,54 @@
+._nav {
+  margin-top: 1em !important;
+}
+._nav.ui.secondary.pointing.menu {
+    border-bottom: 1px solid rgba(255,255,255, 0.1);
+}
+._nav.ui.menu .logo.item{
+    font-weight: 800;color: #ffffff;font-size: 16pt;padding: 0 10px !important;
+}
+.logo {
+    margin-bottom: .5em !important;
+}
+._nav.ui.menu .item{
+    color: rgba(255,255,255,0.4);
+
+}
+._nav.ui.secondary.pointing.menu > .menu > .item,
+._nav.ui.secondary.pointing.menu > .item{
+    border-bottom-width: 1px;
+    margin: 0 0 -1px;
+}
+
+._nav.ui.secondary.pointing.menu .item .ui.input input{
+    color: rgba(255,255,255,0.6);
+}
+
+._nav.ui.secondary.pointing.menu .item i{
+margin-right: 3px;
+    color: rgba(255,255,255,0.6);
+}
+
+._nav.ui.secondary.pointing.menu > .menu > .item:not(.logo),
+._nav.ui.secondary.pointing.menu > .item:not(.logo){
+    padding: 1em 0;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+._nav.ui.secondary.pointing.menu > .menu > .link.item:hover,
+._nav.ui.secondary.pointing.menu > .link.item:hover,
+._nav.ui.secondary.pointing.menu > .menu > a.item:hover,
+._nav.ui.secondary.pointing.menu > a.item:hover{
+    color: rgba(255,255,255,0.6);
+}
+
+._nav.ui.secondary.pointing.menu > .menu > .item.active,
+._nav.ui.secondary.pointing.menu > .item.active{
+    color: rgba(255,255,255,0.6);
+}
+
+._nav.ui.secondary.pointing.menu > .menu > .item.active,
+._nav.ui.secondary.pointing.menu > .item.active{
+    border-color: rgba(255,255,255,0.2);
+}
