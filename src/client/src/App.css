@@ -1,3 +1,45 @@
+html {
+  font-size: 14px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#home .menu .right.menu > .mobile.item {
+  display: none;
+}
+
+.ui.form input:not([type]),
+.ui.form input[type="text"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="datetime-local"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
+.ui.form input[type="url"],
+.ui.form input[type="tel"] {
+  box-shadow: none;
+  border-color: #e6eaed;
+  background: #fff;
+}
+
+.ui.form input:focus:not([type]),
+.ui.form input[type="text"]:focus,
+.ui.form input[type="email"]:focus,
+.ui.form input[type="date"]:focus,
+.ui.form input[type="datetime-local"]:focus,
+.ui.form input[type="password"]:focus,
+.ui.form input[type="number"]:focus,
+.ui.form input[type="url"]:focus,
+.ui.form input[type="tel"]:focus {
+  box-shadow: none;
+  border-color: #ddd;
+  background: #fff;
+}
+
 #home .masthead {
 }
 #home .masthead .column {
@@ -17,45 +59,3 @@
   background-color: #000000;
   padding: 3rem 0rem;
 }
-
-/*******************************
-          Responsive
-*******************************/
-
-/* Mobile Only */
-/*@media only screen and (max-width : 768px) {
-  #home h1 {
-    font-size: 1.5em;
-  }
-  #home .masthead.segment .information {
-    margin-left: 170px;
-  }
-
-  #home .masthead.segment .image {
-    width: 170px;
-  }
-
-  #home .masthead.segment .button {
-    font-size: 1rem;
-  }
-
-  #home .overview .divided.grid .header .icon {
-    font-size: 1.5em;
-  }
-
-  #home .overview .divided.grid .header + p {
-    min-height: 0px;
-  }
-
-  #home .masthead.segment .column {
-    font-size: 0.7rem;
-  }
-
-  #home .masthead.segment .column p {
-    display: none;
-  }
-
-  #home .selection.list .right.floated {
-    display: none;
-  }
-}*/
