@@ -169,7 +169,8 @@ function sendMessage(session, message) {
             {type: 'button', label: 'ICO insider', action: 'Webview::https://icoinsider.herokuapp.com/'},
             {type: 'button', label: 'Search', action: 'Webview::https://etherscan.io/'}
         ]},
-        {type: 'button', label: 'Donate', value: 'donate'}
+        {type: 'button', label: 'Donate', value: 'donate'},
+        {type: 'button', label: 'Funding Flow', action: 'Webview::http://icoinsider.herokuapp.com/viz/0x0d8775f648430679a709e98D2B0cB6250D2887ef'}
     ]
   session.reply(SOFA.Message({
     body: message,
@@ -187,5 +188,14 @@ function fetchICO(status){
         }else if (token[i]['status'] === status)
             list.push(token[i]['symbol'])
     }
-    return list.join('\n')
+    if (status=='completed')
+        entry = 'past'
+    else if (status == 'ICO coming')
+        entry = 'incoming'
+    else if (status == 'ICO running')
+        entry = 'onging'
+    else
+        entry = ''
+    return '%s\nhttp://icoinsider.herokuapp.com/#%s' % (list.join('\n'), entry)
+    // return list.join('\n')
 }
