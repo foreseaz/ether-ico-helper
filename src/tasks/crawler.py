@@ -48,6 +48,8 @@ def get_ico_list(ico_logo_dir):
             status = status.replace('\xa0', ' ').strip()
         name = cols[1].a.getText().strip()
         symbol = cols[2].getText().strip()
+        if symbol == 'TM- NAPOLEON':
+            symbol = 'TM-NAPOLEON'
         description = cols[3].getText().strip()
         ico_tokenmarket_page = cols[1].a.get('href')
         (official_website, start_time, end_time) = get_ico_info(ico_tokenmarket_page)
