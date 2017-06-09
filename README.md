@@ -7,7 +7,7 @@
 
 Bot                        |  BAT ICO Cash Flow
 :-------------------------:|:-------------------------:
-![](docs/images/bot.jpg)  |  ![](docs/images/BAT_ICO_2layer.jpg)
+![](docs/images/bot.jpg)  |  ![](docs/images/BAT_ICO_2layer.png)
 
 ## Future Work
 - Crawler Pipeline
