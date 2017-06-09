@@ -1,5 +1,11 @@
 ._tokenGrid {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 3em 3em;
+  padding: 0 3em 3em;
+}
+
+._tokenGrid .divider {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  font-size: 1.3em;
 }
