@@ -27,7 +27,7 @@ export default class Hero extends Component {
         </p>
         <div className="ui input search-box">
           <input value={this.state.value} onChange={this.handleChange} className="search-input" type="text" placeholder="Search Coin..." />
-          <a href="#ongoing" onClick={this.handleSubmit} type="submit" className="large basic inverted animated fade ui button">
+          <a href="#list" onClick={this.handleSubmit} type="submit" className="large basic inverted animated fade ui button">
             <div className="visible content search-btn">Search</div>
             <div className="hidden content">Go</div>
           </a>

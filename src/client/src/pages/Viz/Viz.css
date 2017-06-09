@@ -1,0 +1,14 @@
+._viz .title {
+  text-align: center;
+}
+._viz .wrapper {
+  margin-bottom: 4em;
+}
+#viz_sankey {
+  @media screen and (min-width: 569px) {
+    margin-left: 250px;
+  }
+  @media screen and (max-width: 568px) {
+    margin-left: 0;
+  }
+}

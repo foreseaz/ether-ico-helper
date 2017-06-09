@@ -7,7 +7,7 @@ import './TokenGrid.css';
 
 const TokenGrid = ({tokens}) => {
   return (
-    <div id="results" className="_tokenGrid">
+    <div id="list" className="_tokenGrid">
       <Divider id="ongoing" horizontal><Icon name='checked calendar' /> Ongoing</Divider>
       <Grid doubling columns={5}>
         {_filter(tokens, t => t.status === 'Trading').map(token => (

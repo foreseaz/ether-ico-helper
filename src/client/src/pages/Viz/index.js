@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import batData from '../../data/bat.json';
+import Nav from '../../components/Nav';
+import Footer from '../../components/Footer';
+import './Viz.css';
 
 export default class Viz extends Component {
   constructor(props) {
@@ -30,19 +33,19 @@ export default class Viz extends Component {
     let sankeyArr = [];
 
     const l1Addrs = _.map(data, v1 => v1.address);
-    console.log(l1Addrs);
+    // console.log(l1Addrs);
     const l2Addrs = [];
     _.map(data, v1 => {
       _.map(v1.vendors, v2 => { l2Addrs.push(v2.address) });
     });
-    console.log(l2Addrs);
+    // console.log(l2Addrs);
     const l3Addrs = [];
     _.map(data, v1 => {
       _.map(v1.vendors, v2 => {
         _.map(v2.vendors, v3 => { l3Addrs.push(v3.address) });
       });
     });
-    console.log(l3Addrs);
+    // console.log(l3Addrs);
 
     _.map(data, (v1) => {
       sankeyArr.push([v1.address, batAddr, v1.amount])
@@ -65,7 +68,7 @@ export default class Viz extends Component {
 
   drawSankey() {
     var data = new window.google.visualization.DataTable();
-    console.log(this.state.sankeyArr);
+    // console.log(this.state.sankeyArr);
     data.addColumn('string', 'From');
     data.addColumn('string', 'To');
     data.addColumn('number', 'ETH');
@@ -89,9 +92,21 @@ export default class Viz extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Viz BAT ICO TX</h1>
-        <div id="viz_sankey"></div>
+
+      <div className="_viz">
+        <div style={{height: 75}} className="landing-wrapper ui inverted masthead centered segment">
+          <div id="particles-js"></div>
+          <div className="ui page grid">
+            <div className="column">
+              <Nav batActive/>
+            </div>
+          </div>
+        </div>
+        <h1 className="title">Viz BAT ICO TX</h1>
+        <div className="wrapper">
+          <div id="viz_sankey"></div>
+        </div>
+        <Footer />
       </div>
     )
   }

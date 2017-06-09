@@ -32,7 +32,9 @@ export default class Home extends Component {
   handleFilter(q) {
     let tokens = _tokens;
     if (q !== '') {
-      tokens = _.filter(tokens, t => _.includes(t.symbol, q) || _.includes(t.description, q) || _.includes(t.name, q));
+      tokens = _.filter(tokens, t => _.includes(t.symbol.toLowerCase(), q.toLowerCase())
+                || _.includes(t.description.toLowerCase(), q.toLowerCase())
+                || _.includes(t.name.toLowerCase(), q.toLowerCase()));
     }
     this.setState({ tokens });
   }
