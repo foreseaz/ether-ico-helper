@@ -1,9 +1,16 @@
 # ICO Helper for Token Hackathon
 
-TODO
-- ICO info bot
-- Responsive website
-- ETH flow data-viz
+## Feature:
+- ICO bot `icoinsider` in Token app.
+- Crawlers of ICO tokens and deep transactions.
+- ETH cash flow data-viz PoC with BAT ICO data.
+
+<img src="docs/images/bot.jpg" width="300" />
+<img src="docs/images/BAT_ICO_2layer.jpg" width="300" />
+
+## Future Work
+- Crawler Pipeline
+- Other data-viz
 
 ## Running locally
 
@@ -31,6 +38,13 @@ Test web after build:
 yarn prod
 ```
 
+## Data Viz
+
+Researches:
+- [Sankey Diagrams](https://bost.ocks.org/mike/sankey/)
+- [Weighted Tree](http://vizuly.io/product/weighted-tree/?demo=d3js)
+- [Sequences sunburst](https://bl.ocks.org/kerryrodden/7090426)
+
 ## Architecture
 
 #### Bot:
@@ -51,9 +65,11 @@ yarn prod
 
 ![diagram](docs/images/web.png)
 
-## Data Viz
+## Contributors
+By alphabetical order:
+- [@foreseaz](https://github.com/foreseaz)
+- [@lambda](https://github.com/zeqing-guo)
+- [@liss](https://github.com/edithli)
 
-Researches:
-- [Sankey Diagrams](https://bost.ocks.org/mike/sankey/)
-- [Weighted Tree](http://vizuly.io/product/weighted-tree/?demo=d3js)
-- [Sequences sunburst](https://bl.ocks.org/kerryrodden/7090426)
+## License
+MIT
