@@ -12,6 +12,10 @@ class CrawlerTestCase(unittest.TestCase):
                          , ('', '1. Jun 2017', '25. Jun 2017'))
 
     def test_ico_address(self):
+        self.assertEqual(crawler.get_ico_address('Augur'
+                                                 , 'REP'
+                                                 , 'https://tokenmarket.net/blockchain/ethereum/assets/augur/')
+                         , ['0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5'])
         self.assertEqual(crawler.get_ico_address('Aragon'
                                                  , 'ANT'
                                                  , 'https://tokenmarket.net/blockchain/ethereum/assets/aragon/')
@@ -19,15 +23,15 @@ class CrawlerTestCase(unittest.TestCase):
         self.assertEqual(crawler.get_ico_address('Mysterium Network'
                                                  , 'MYST'
                                                  , 'https://tokenmarket.net/blockchain/ethereum/assets/mysterium-network/')
-                         , ['0x4f529990b7f3d1fb4152736155e431c96fd86294'])
+                         , [])
         self.assertEqual(crawler.get_ico_address('21 Million'
                                                  , '21MCoin'
                                                  , 'https://tokenmarket.net/blockchain/ethereum/assets/21-million/')
                          , [])
-        self.assertEqual(crawler.get_ico_address('Augur'
-                                                 , 'REP'
-                                                 , 'https://tokenmarket.net/blockchain/ethereum/assets/augur/')
-                         , ['https://etherscan.io/address/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5'])
+        self.assertEqual(crawler.get_ico_address('ChronoBank'
+                                                 , 'LH'
+                                                 , 'https://tokenmarket.net/blockchain/ethereum/assets/chronobank/')
+                         , [])
 
 
 if __name__ == '__main__':
