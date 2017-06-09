@@ -2,6 +2,9 @@ const Bot = require('./lib/Bot')
 const SOFA = require('sofa-js')
 const Fiat = require('./lib/Fiat')
 
+const token = require('./client/src/data/tokens.json')
+const logo_url = '../src/client/public/'
+
 let bot = new Bot()
 
 // ROUTING
@@ -27,7 +30,22 @@ bot.onEvent = function(session, message) {
 }
 
 function onMessage(session, message) {
-  welcome(session)
+    // welcome(session)
+    // search by ICO name
+    for (var i = 0; i < token.length; i++){
+        if (token[i]['name'].toLowerCase() === message.body.toLowerCase() || token[i]['symbol'].toLowerCase() === message.body.toLowerCase()){
+            let msg = `${token[i]['name']} - ${token[i]['symbol']}\n\n${token[i]['description']}\n\n${token[i]['start_time']} ~ ${token[i]['end_time']}\n${token[i]['official_website']}`
+            session.reply(SOFA.Message({
+                body: msg,
+                attachments: [{
+                    "type": "image",
+                    "url": `${logo_url}${token[i]['logo']}`
+                }]
+            }))
+            return false
+        }
+    }
+    sendMessage(session, "Please input an ICO name or symbol")
 }
 
 function onCommand(session, command) {
@@ -41,6 +59,15 @@ function onCommand(session, command) {
       break
     case 'donate':
       donate(session)
+      break
+  case 'completed':
+      sendMessage(session, fetchICO('completed'))
+      break
+  case 'incoming':
+      sendMessage(session, fetchICO('ICO coming'))
+      break
+  case 'ongoing':
+      sendMessage(session, fetchICO('ICO running'))
       break
     }
 }
@@ -120,14 +147,45 @@ function webview(session) {
 // HELPERS
 
 function sendMessage(session, message) {
-  let controls = [
-    {type: 'button', label: 'Ping', value: 'ping'},
-    {type: 'button', label: 'Webview Test', value: 'webview'},
-    {type: 'button', label: 'Donate', value: 'donate'}
-  ]
+  // let controls = [
+  //   {type: 'button', label: 'Ping', value: 'ping'},
+  //   {type: 'button', label: 'Webview Test', value: 'webview'},
+  //   {type: 'button', label: 'Donate', value: 'donate'}
+  // ]
+    let controls = [
+        {type: 'button', label: 'ICO list', controls: [
+            {type: 'button', label: 'Incoming', value: 'incoming'},
+            {type: 'button', label: 'Ongoing', value: 'ongoing'},
+            {type: 'button', label: 'Trading', value: 'trading'}
+        ]},
+        {type: 'group', label: 'ICO tips', controls:[
+            {type: 'button', label: 'Tips & Tricks',
+             action: 'Webview::https://steemit.com/ethereum/@tomshwom/getting-in-to-icos-a-guide-and-some-tips-and-tricks'},
+            {type: 'button', label: 'Crazy ICO',
+             action: 'Webview::https://medium.com/@EthereumRussian/how-to-be-on-time-during-crazy-icos-d4580144613e'},
+            {type: 'button', label: 'Ethereum Gas', action: 'Webview::https://steemit.com/ethereum/@tomshwom/ethereum-gas-how-it-works'}
+        ]},
+        {type: 'button', label: 'More', controls: [
+            {type: 'button', label: 'ICO insider', action: 'Webview::https://icoinsider.herokuapp.com/'},
+            {type: 'button', label: 'Search', action: 'Webview::https://etherscan.io/'}
+        ]},
+        {type: 'button', label: 'Donate', value: 'donate'}
+    ]
   session.reply(SOFA.Message({
     body: message,
     controls: controls,
     showKeyboard: false,
   }))
+}
+
+function fetchICO(status){
+    let list = []
+    for (var i = 0; i < token.length; i++){
+        if (status === 'completed'){
+            if (token[i]['status'] === 'ICO over' || token[i]['status'] === 'Trading')
+                list.push(token[i]['symbol'])
+        }else if (token[i]['status'] === status)
+            list.push(token[i]['symbol'])
+    }
+    return list.join('\n')
 }
