@@ -5,8 +5,9 @@
 - Crawlers of ICO tokens and deep transactions.
 - ETH cash flow data-viz PoC with BAT ICO data.
 
-<img src="docs/images/bot.jpg" width="300" />
-<img src="docs/images/BAT_ICO_2layer.jpg" width="300" />
+Bot                        |  BAT ICO Cash Flow
+:-------------------------:|:-------------------------:
+![](docs/images/bot.jpg)  |  ![](docs/images/BAT_ICO_2layer.jpg)
 
 ## Future Work
 - Crawler Pipeline
