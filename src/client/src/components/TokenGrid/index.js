@@ -2,10 +2,10 @@ import React from 'react';
 import _filter from 'lodash/filter';
 import { Grid, Image, Card, Icon, Divider } from 'semantic-ui-react';
 import Item from './Item';
-import tokens from '../../data/tokens.json';
+// import tokens from '../../data/tokens.json';
 import './TokenGrid.css';
 
-const TokenGrid = () => {
+const TokenGrid = ({tokens}) => {
   return (
     <div id="results" className="_tokenGrid">
       <Divider id="ongoing" horizontal><Icon name='checked calendar' /> Ongoing</Divider>
