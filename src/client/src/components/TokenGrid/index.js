@@ -9,7 +9,7 @@ const TokenGrid = () => {
     <div className="_tokenGrid">
       <Grid doubling columns={5}>
         {tokens.map(token => (
-          <Grid.Column>
+          <Grid.Column key={token.symbol}>
             <Item token={token}/>
           </Grid.Column>
         ))}

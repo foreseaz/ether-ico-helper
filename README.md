@@ -1,9 +1,9 @@
 # ICO Helper for Token Hackathon
 
 TODO
-- ICO Index Bot
-- 一键参投
-- 资金流分析
+- ICO info bot
+- Responsive website
+- ETH flow data-viz
 
 ## Running locally
 
@@ -46,7 +46,14 @@ yarn prod
 ![diagram](docs/images/tokenbot.png)
 
 ##### Web:
-* **Node & Express as API server**<br>
-* **React frontend**<br>
+* **Node & Express as static files / API server**<br>
+* **React stack frontend**<br>
 
 ![diagram](docs/images/web.png)
+
+## Data Viz
+
+Researches:
+- [Sankey Diagrams](https://bost.ocks.org/mike/sankey/)
+- [Weighted Tree](http://vizuly.io/product/weighted-tree/?demo=d3js)
+- [Sequences sunburst](https://bl.ocks.org/kerryrodden/7090426)
