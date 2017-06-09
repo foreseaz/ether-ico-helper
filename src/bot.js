@@ -61,13 +61,13 @@ function onCommand(session, command) {
       donate(session)
       break
   case 'completed':
-      sendMessage(session, fetchICO('completed'))
+      sendMessage(session, `${fetchICO('completed')}\nhttp://icoinsider.herokuapp.com/#past`)
       break
   case 'incoming':
-      sendMessage(session, fetchICO('ICO coming'))
+      sendMessage(session, `${fetchICO('ICO coming')}\nhttp://icoinsider.herokuapp.com/#incoming`)
       break
   case 'ongoing':
-      sendMessage(session, fetchICO('ICO running'))
+      sendMessage(session, `${fetchICO('ICO running')}\nhttp://icoinsider.herokuapp.com/#onging`)
       break
     }
 }
@@ -153,10 +153,10 @@ function sendMessage(session, message) {
   //   {type: 'button', label: 'Donate', value: 'donate'}
   // ]
     let controls = [
-        {type: 'button', label: 'ICO list', controls: [
+        {type: 'group', label: 'ICO list', controls: [
             {type: 'button', label: 'Incoming', value: 'incoming'},
             {type: 'button', label: 'Ongoing', value: 'ongoing'},
-            {type: 'button', label: 'Trading', value: 'trading'}
+            {type: 'button', label: 'Completed', value: 'completed'}
         ]},
         {type: 'group', label: 'ICO tips', controls:[
             {type: 'button', label: 'Tips & Tricks',
@@ -165,12 +165,8 @@ function sendMessage(session, message) {
              action: 'Webview::https://medium.com/@EthereumRussian/how-to-be-on-time-during-crazy-icos-d4580144613e'},
             {type: 'button', label: 'Ethereum Gas', action: 'Webview::https://steemit.com/ethereum/@tomshwom/ethereum-gas-how-it-works'}
         ]},
-        {type: 'button', label: 'More', controls: [
-            {type: 'button', label: 'ICO insider', action: 'Webview::https://icoinsider.herokuapp.com/'},
-            {type: 'button', label: 'Search', action: 'Webview::https://etherscan.io/'}
-        ]},
-        {type: 'button', label: 'Donate', value: 'donate'},
-        {type: 'button', label: 'Funding Flow', action: 'Webview::http://icoinsider.herokuapp.com/viz/0x0d8775f648430679a709e98D2B0cB6250D2887ef'}
+        {type: 'button', label: 'BAT Analysis', action: 'Webview::http://icoinsider.herokuapp.com/viz/0x0d8775f648430679a709e98D2B0cB6250D2887ef'},
+        {type: 'button', label: 'Donate', value: 'donate'}
     ]
   session.reply(SOFA.Message({
     body: message,
@@ -188,14 +184,7 @@ function fetchICO(status){
         }else if (token[i]['status'] === status)
             list.push(token[i]['symbol'])
     }
-    if (status=='completed')
-        entry = 'past'
-    else if (status == 'ICO coming')
-        entry = 'incoming'
-    else if (status == 'ICO running')
-        entry = 'onging'
-    else
-        entry = ''
-    return '%s\nhttp://icoinsider.herokuapp.com/#%s' % (list.join('\n'), entry)
+    return list.join('\n')
+    // return '%s\nhttp://icoinsider.herokuapp.com/#%s' % (list.join('\n'), entry)
     // return list.join('\n')
 }
