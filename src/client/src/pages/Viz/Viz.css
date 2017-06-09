@@ -3,6 +3,7 @@
 }
 ._viz .wrapper {
   margin-bottom: 4em;
+  overflow: auto;
 }
 #viz_sankey {
   @media screen and (min-width: 569px) {
