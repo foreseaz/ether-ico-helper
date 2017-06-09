@@ -5,31 +5,18 @@ const Footer = () => (
     <div className="ui stackable center aligned page grid">
       <div className="four column row">
         <div className="column">
-          <h5 className="ui inverted header">Team</h5>
+        </div>
+        <div className="column">
+          <h5 className="ui inverted header">Contributors</h5>
           <div className="ui inverted link list">
-            <a className="item">Registration</a>
-            <a className="item">Course Calendar</a>
-            <a className="item">Professors</a>
+            <p>By alphabetical order:</p>
+            <a className="item" href="https://github.com/foreseaz/">@foreseaz</a>
+            <a className="item" href="https://github.com/zeqing-guo">@lambda</a>
+            <a className="item" href="https://github.com/edithli">@liss</a>
+            <a style={{color: 'white'}} href="https://github.com/foreseaz/ether-ico-helper">Github Repo</a>
           </div>
         </div>
         <div className="column">
-          <h5 className="ui inverted header">Library</h5>
-          <div className="ui inverted link list">
-            <a className="item">A-Z</a>
-            <a className="item">Most Popular</a>
-            <a className="item">Recently Changed</a>
-          </div>
-        </div>
-        <div className="column">
-          <h5 className="ui inverted header">Community</h5>
-          <div className="ui inverted link list">
-            <a className="item">BBS</a>
-            <a className="item">Careers</a>
-            <a className="item">Privacy Policy</a>
-          </div>
-        </div>
-        <div className="column">
-          Foo
         </div>
       </div>
     </div>
