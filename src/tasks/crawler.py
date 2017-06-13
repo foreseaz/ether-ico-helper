@@ -48,12 +48,14 @@ def get_ico_list(ico_logo_dir):
             status = status.replace('\xa0', ' ').strip()
         name = cols[1].a.getText().strip()
         symbol = cols[2].getText().strip()
+        if symbol == 'TM- NAPOLEON':
+            symbol = 'TM-NAPOLEON'
         description = cols[3].getText().strip()
         ico_tokenmarket_page = cols[1].a.get('href')
         (official_website, start_time, end_time) = get_ico_info(ico_tokenmarket_page)
         smart_contract_address = get_ico_address(name, symbol, ico_tokenmarket_page)
         # download logo
-        logo_path = os.path.join(ico_logo_dir, symbol + '.png')
+        logo_path = os.path.join(ico_logo_dir, symbol.replace(' ', '_') + '.png')
         logo_url = ico_tokenmarket_page + 'logo_big.png'
         logo_request = requests.get(logo_url, stream=True)
         with open(logo_path, 'wb') as image:
@@ -112,16 +114,20 @@ def get_ico_address(name, symbol, ico_tokenmarket_page):
     sale_page = requests.get(ico_tokenmarket_sale_page)
     if sale_page.status_code == 200:
         # <div class="col-md-6 col-sm-5">
-        #     <p>
-        #         Any deposits before May 18th, 2017, 9:30 UTC are rejected.
-        #     </p>
-        #     <p>
-        #         <a target="_blank" href="https://tokenmarket.net/what-is/how-to-participate-ethereum-token-crowdsale/"><i class="fa fa-question-circle"></i> See payment instructions</a>
-        #     </p>
-        #     <p><strong>Do NOT send ETH from an exchange</strong>, Use MyEtherWallet, imToken, Mist or Parity wallets or other compatible wallets. <a target="_blank" href="https://tokenmarket.net/what-is/how-to-participate-ethereum-token-crowdsale/">See the full list of compatible wallets.</a></p>
-        #     <p>
-        #         <a target="_blank" rel=noopener href="https://etherscan.io/address/0xace62f87abe9f4ee9fd6e115d91548df24ca0943"><i class="fa fa-rocket"></i> Watch token sale live on Ethereum blockchain</a>.
-        #     </p>
+        #    <p>
+        #        Any deposits before May 18th, 2017, 9:30 UTC are rejected.
+        #    </p>
+        #    <p>
+        #        <a target="_blank" href="https://tokenmarket.net/what-is/how-to-participate-ethereum-token-crowdsale/">
+        #            <i class="fa fa-question-circle"></i>
+        #            See payment instructions
+        #        </a>
+        #    </p>
+        #    <p>
+        #       <strong>Do NOT send ETH from an exchange</strong>, Use MyEtherWallet, imToken, Mist or Parity wallets or other compatible wallets. <a target="_blank" href="https://tokenmarket.net/what-is/how-to-participate-ethereum-token-crowdsale/">See the full list of compatible wallets.</a></p>
+        #    <p>
+        #        <a target="_blank" rel=noopener href="https://etherscan.io/address/0xace62f87abe9f4ee9fd6e115d91548df24ca0943"><i class="fa fa-rocket"></i> Watch token sale live on Ethereum blockchain</a>.
+        #    </p>
         # </div>
         sale_page_soup = BeautifulSoup(sale_page.content, 'lxml')
         div = sale_page_soup.find('div', {'class': 'col-md-6 col-sm-5'})
@@ -131,7 +137,7 @@ def get_ico_address(name, symbol, ico_tokenmarket_page):
 
     # step 2: try to find address from etherscan
     # etherscan cannot search '0x' project correctly
-    if name == '0x':
+    if name == '0x' or name == 'Ether':
         return address
     # search by name
     etherscan_search_url = 'https://etherscan.io/searchHandler?term=' + '+'.join(name.split(' '))
@@ -156,18 +162,20 @@ def etherscan_search(url):
     # otherwise, it will response `[]`
     ico_etherscan_content = ico_etherscan.content.decode("utf-8")
     if ico_etherscan_content != '[]':
-        token_address_or_name = ico_etherscan_content.split('\\t')[1]
-        if len(token_address_or_name) < 42:
-            # the address have a name
-            token_url = 'https://etherscan.io/token/' + ico_etherscan_content.split('\\t')[1]
-            token_etherscan_page = requests.get(token_url)
-            if token_etherscan_page.status_code != 200:
-                sys.exit()
-            token_etherscan_soup = BeautifulSoup(token_etherscan_page.content, 'lxml')
+        # the address have a name
+        token_url = 'https://etherscan.io/token/' + ico_etherscan_content.split('\\t')[1]
+        token_etherscan_page = requests.get(token_url)
+        if token_etherscan_page.status_code != 200:
+            sys.exit()
+        token_etherscan_soup = BeautifulSoup(token_etherscan_page.content, 'lxml')
+        if token_etherscan_page.content.decode('utf-8').find('0 TOKEN') == -1:
             tr = token_etherscan_soup.find('tr', {'id': 'ContentPlaceHolder1_trContract'})
-            return tr.a.getText().strip()
+            if tr is None:
+                return ''
+            else:
+                return tr.a.getText().strip()
         else:
-            return token_address_or_name
+            return ''
     else:
         return ''
 
